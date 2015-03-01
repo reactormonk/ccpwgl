@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>WebGL API Test</title>
+
+        <script type="text/javascript" src="/src/external/webgl-utils.js"></script>
+        <script type="text/javascript" src="/src/external/glMatrix-0.9.5.min.js"></script>
+        <script type="text/javascript" src="/src/external/tween.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2VariableStore.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2MatrixParameter.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2Vector4Parameter.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2Resource.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2BatchAccumulator.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2ResMan.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2RenderTarget.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2Vector2Parameter.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2Device.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2GeometryRes.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2TextureRes.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2VariableParameter.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2PostProcess.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2ValueBinding.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2TransformParameter.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2Mesh.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2Vector3Parameter.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2TextureParameter.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2AnimationController.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2EffectRes.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2RawData.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2FloatParameter.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2Frustum.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2VertexDeclaration.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2CurveSet.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2InstancedMesh.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2Effect.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2Float.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2PerObjectData.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2BinaryReader.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2ObjectReader.js"></script>
+        <script type="text/javascript" src="/src/core/Tw2SamplerState.js"></script>
+        <script type="text/javascript" src="/src/curves/Tw2TransformTrack.js"></script>
+        <script type="text/javascript" src="/src/curves/Tw2YPRSequencer.js"></script>
+        <script type="text/javascript" src="/src/curves/Tw2Vector3Curve.js"></script>
+        <script type="text/javascript" src="/src/curves/Tw2WbgTrack.js"></script>
+        <script type="text/javascript" src="/src/curves/Tw2RandomConstantCurve.js"></script>
+        <script type="text/javascript" src="/src/curves/Tw2XYZScalarSequencer.js"></script>
+        <script type="text/javascript" src="/src/curves/Tw2VectorCurve.js"></script>
+        <script type="text/javascript" src="/src/curves/Tw2Vector2Curve.js"></script>
+        <script type="text/javascript" src="/src/curves/Tw2QuaternionSequencer.js"></script>
+        <script type="text/javascript" src="/src/curves/Tw2ScalarCurve2.js"></script>
+        <script type="text/javascript" src="/src/curves/Tw2PerlinCurve.js"></script>
+        <script type="text/javascript" src="/src/curves/Tw2QuaternionCurve.js"></script>
+        <script type="text/javascript" src="/src/curves/Tw2RGBAScalarSequencer.js"></script>
+        <script type="text/javascript" src="/src/curves/Tw2EventCurve.js"></script>
+        <script type="text/javascript" src="/src/curves/Tw2MayaVector3Curve.js"></script>
+        <script type="text/javascript" src="/src/curves/Tw2SineCurve.js"></script>
+        <script type="text/javascript" src="/src/curves/Tw2ColorCurve2.js"></script>
+        <script type="text/javascript" src="/src/curves/Tw2MayaScalarCurve.js"></script>
+        <script type="text/javascript" src="/src/curves/Tw2RigidOrientation.js"></script>
+        <script type="text/javascript" src="/src/curves/Tw2RotationCurve.js"></script>
+        <script type="text/javascript" src="/src/curves/Tw2EulerRotation.js"></script>
+        <script type="text/javascript" src="/src/curves/Tw2ScalarSequencer.js"></script>
+        <script type="text/javascript" src="/src/curves/Tw2ColorSequencer.js"></script>
+        <script type="text/javascript" src="/src/curves/Tw2ColorCurve.js"></script>
+        <script type="text/javascript" src="/src/curves/Tw2ScalarCurve.js"></script>
+        <script type="text/javascript" src="/src/curves/Tw2MayaEulerRotationCurve.js"></script>
+        <script type="text/javascript" src="/src/curves/Tw2VectorSequencer.js"></script>
+        <script type="text/javascript" src="/src/curves/Tw2MayaAnimationEngine.js"></script>
+        <script type="text/javascript" src="/src/particle/Tw2StaticEmitter.js"></script>
+        <script type="text/javascript" src="/src/particle/Tw2ParticleTurbulenceForce.js"></script>
+        <script type="text/javascript" src="/src/particle/Tw2ParticleAttractorForce.js"></script>
+        <script type="text/javascript" src="/src/particle/Tw2DynamicEmitter.js"></script>
+        <script type="text/javascript" src="/src/particle/Tw2ParticleDragForce.js"></script>
+        <script type="text/javascript" src="/src/particle/Tw2RandomUniformAttributeGenerator.js"></script>
+        <script type="text/javascript" src="/src/particle/Tw2ParticleSpring.js"></script>
+        <script type="text/javascript" src="/src/particle/Tw2ParticleSystem.js"></script>
+        <script type="text/javascript" src="/src/particle/Tw2ParticleFluidDragForce.js"></script>
+        <script type="text/javascript" src="/src/particle/Tw2ParticleDirectForce.js"></script>
+        <script type="text/javascript" src="/src/particle/Tw2RandomIntegerAttributeGenerator.js"></script>
+        <script type="text/javascript" src="/src/particle/Tw2SphereShapeAttributeGenerator.js"></script>
+        <script type="text/javascript" src="/src/eve/EveLocator.js"></script>
+        <script type="text/javascript" src="/src/eve/EveSOF.js"></script>
+        <script type="text/javascript" src="/src/eve/EveSpaceObject.js"></script>
+        <script type="text/javascript" src="/src/eve/EveSpriteSet.js"></script>
+        <script type="text/javascript" src="/src/eve/EveTransform.js"></script>
+        <script type="text/javascript" src="/src/eve/EveTurretSet.js"></script>
+        <script type="text/javascript" src="/src/eve/EveTurretFiringFX.js"></script>
+        <script type="text/javascript" src="/src/eve/EveBoosterSet.js"></script>
+        <script type="text/javascript" src="/src/eve/EveLensflare.js"></script>
+        <script type="text/javascript" src="/src/eve/EveSpotlightSet.js"></script>
+        <script type="text/javascript" src="/src/eve/EvePlanet.js"></script>
+        <script type="text/javascript" src="/src/eve/EvePlaneSet.js"></script>
+        <script type="text/javascript" src="/src/eve/EveShip.js"></script>
+        <script type="text/javascript" src="/src/eve/EveOccluder.js"></script>
+        <script type="text/javascript" src="/src/eve/EveEffectRoot.js"></script>
+        <script type="text/javascript" src="/src/eve/EveSpaceObjectDecal.js"></script>
+        <script type="text/javascript" src="/src/eve/EveSpaceScene.js"></script>
+        <script type="text/javascript" src="/src/eve/EveStretch.js"></script>
+
+        <script type="text/javascript" src="/src/exporter.js"></script>
+
+        <script type="text/javascript" src="/src/test/TestCamera2.js"></script>
+        <script type="text/javascript" src="/src/ccpwgl.js"></script>
+
+        <script type="text/javascript">
+            function onDocumentLoad()
+            {
+                var canvas = document.getElementById('mainCanvas');
+                ccpwgl.initialize(canvas);
+                ccpwgl.setResourcePath('local', "/");
+                var scene = ccpwgl.loadScene("local:/turret.red");
+
+        		var camera = new TestCamera(canvas);
+                camera.minDistance = 10;
+                camera.maxDistance = 10000;
+                camera.fov = 30;
+                camera.distance = 5000;
+                camera.nearPlane = 1;
+                camera.farPlane = 10000000;
+                camera.minPitch = -0.5;
+                camera.maxPitch = 0.65;
+                ccpwgl.setCamera(camera);
+
+                ccpwgl.enablePostprocessing(true);
+
+        		ccpwgl.onPreRender = function () 
+        		{ 
+        		
+        		
+        		};
+        		
+
+            }
+        	
+            onload = onDocumentLoad;
+
+        </script>
+
+    </head>
+    <body style="margin:0">
+        <canvas id="mainCanvas" style="position:fixed;width:100%;height:100%"></canvas>
+    </body>
+</html>
