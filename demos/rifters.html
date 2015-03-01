@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
     <head>
         <title>WebGL API Test</title>
@@ -108,18 +108,24 @@
                 var canvas = document.getElementById('mainCanvas');
                 ccpwgl.initialize(canvas);
                 ccpwgl.setResourcePath('local', "/");
-                var scene = ccpwgl.loadScene("local:/turret.red");
+                ccpwgl.setResourcePath('cppc', "/");
+                var scene = ccpwgl.createScene([1,1,1,1]);
 
         		var camera = new TestCamera(canvas);
                 camera.minDistance = 10;
-                camera.maxDistance = 10000;
+                camera.maxDistance = 1000;
                 camera.fov = 30;
-                camera.distance = 5000;
+                camera.rotationX = 0.8;
+                camera.rotationY = 0.6;
+                camera.distance = 100;
                 camera.nearPlane = 1;
                 camera.farPlane = 10000000;
-                camera.minPitch = -0.5;
-                camera.maxPitch = 0.65;
+                camera.minPitch = 0;
+                camera.maxPitch = 0;
                 ccpwgl.setCamera(camera);
+
+                turrets = scene.loadShip("local:/turret.red");
+                turrets.mountTurret(1, "res:/dx9/model/turret/hybrid/blast/l/blast_electron_t1.red")
 
                 ccpwgl.enablePostprocessing(true);
 

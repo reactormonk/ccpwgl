@@ -139,7 +139,7 @@ Tw2ObjectReader.prototype.ConstructFromNode = function (initialize, async)
         {
             try
             {
-                parent[index] = JSON.parse(value);
+                parent[index] = JSON.parse(value.replace(/,\]$/, "]"));
             }
             catch (e)
             {
