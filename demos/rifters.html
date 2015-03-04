@@ -98,18 +98,17 @@
         <script type="text/javascript" src="/src/eve/EveStretch.js"></script>
 
         <script type="text/javascript" src="/src/exporter.js"></script>
-
         <script type="text/javascript" src="/src/test/TestCamera2.js"></script>
         <script type="text/javascript" src="/src/ccpwgl.js"></script>
+        <script type="text/javascript" src="/src/custom.js"></script>
 
         <script type="text/javascript">
             function onDocumentLoad()
             {
                 var canvas = document.getElementById('mainCanvas');
                 ccpwgl.initialize(canvas);
-                ccpwgl.setResourcePath('local', "/");
-                ccpwgl.setResourcePath('cppc', "/");
-                var scene = ccpwgl.createScene([1,1,1,1]);
+                ccpwgl.setResourcePath("local", "/demos/");
+                var scene = ccpwgl.loadScene("res:/dx9/scene/universe/m01_cube.red");
 
         		var camera = new TestCamera(canvas);
                 camera.minDistance = 10;
@@ -117,24 +116,77 @@
                 camera.fov = 30;
                 camera.rotationX = 0.8;
                 camera.rotationY = 0.6;
-                camera.distance = 100;
+                camera.distance = 1500;
                 camera.nearPlane = 1;
                 camera.farPlane = 10000000;
                 camera.minPitch = 0;
                 camera.maxPitch = 0;
                 ccpwgl.setCamera(camera);
 
-                turrets = scene.loadShip("local:/turret.red");
-                turrets.mountTurret(1, "res:/dx9/model/turret/hybrid/blast/l/blast_electron_t1.red")
+                var range = function(start, end) { return Array.apply(Array, Array(end + 1 - start)).map(function (_, i) { return i + start; }); }
+                var turret = "res:/dx9/model/turret/projectile/auto/s/auto_200mm_t2.red"
+                var mountTurrets = function(ship) {
+                    range(1, 3).forEach(function(i) {
+                        ship.mountTurret(i, turret);
+                    })
+                }
+
+                var factor = 300
+                var d = Math.sqrt(3/4)*factor
+                rifter = scene.loadShip("mf4_t1:minmatarbase:minmatar");
+                var degstep = 0.02
+                var orbiting = [
+                    scene.loadShip("mf4_t1:brutor:minmatar"),
+                    scene.loadShip("mf4_t1:caldarinavy:minmatar"),
+                    scene.loadShip("mf4_t1:gallentenavy:minmatar"),
+                    scene.loadShip("mf4_t1:minmatarnavy:minmatar"),
+                    scene.loadShip("mf4_t1:thukker:minmatar"),
+                    scene.loadShip("mf4_t1:amarrnavy:minmatar")
+                ];
+                orbiting.forEach(mountTurrets);
+                mountTurrets(rifter);
+                var translating = [
+                    [factor, 0, 0],
+                    [0.5*factor, d, 0],
+                    [-0.5*factor, d, 0],
+                    [-factor, 0, 0],
+                    [-factor*0.5, -d, 0],
+                    [factor*0.5, -d, 0]
+                ];
 
                 ccpwgl.enablePostprocessing(true);
 
         		ccpwgl.onPreRender = function () 
         		{ 
         		
-        		
         		};
-        		
+
+                range(0, 5).forEach(function(i) {
+                    var ship = orbiting[i];
+                    var mat = ship.getTransform();
+                    var trans = translating[i];
+                    mat4.translate(mat, trans);
+                    ship.setTransform(mat);
+                })
+
+                var orientation = 0 // current rotation
+                var step = function(timestamp) {
+                    range(0, 5).forEach(function(i) {
+                        var ship = orbiting[i];
+                        var mat = ship.getTransform();
+                        var trans = translating[i];
+                        var tmptrans = vec3.create(trans);
+                        mat4.rotate(mat, orientation-degstep, [0,0,1]);
+                        mat4.translate(mat, vec3.negate(tmptrans));
+                        mat4.rotate(mat, degstep, [0,0,1]);
+                        mat4.translate(mat, trans);
+                        mat4.rotate(mat, -orientation, [0,0,1]);
+                        ship.setTransform(mat);
+                    })
+                    orientation += degstep;
+                    window.requestAnimationFrame(step);
+                }
+                window.requestAnimationFrame(step)
 
             }
         	
